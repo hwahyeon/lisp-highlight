@@ -2,7 +2,7 @@
   "name": "@hwahyeon/lisp-highlight",
   "version": "1.0.0",
   "main": "index.js",
-  "description": "Simple LISP code highlighter for web",
+  "description": "Simple Lisp code highlighter for web",
   "keywords": [
     "lisp",
     "highlight",
