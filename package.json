@@ -12,6 +12,10 @@
   "author": "hwahyeon <hwahyeon.dev@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hwahyeon/lisp-highlight.git"
+  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   }
