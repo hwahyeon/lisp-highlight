@@ -16,7 +16,7 @@ A minimal, lightweight syntax highlighter for Lisp code designed for web environ
 Using GitHub Packages:
 
 ```bash
-npm install @your-username/lisp-highlight
+npm install @hwahyeon/lisp-highlight
 ```
 
 ## Usage
