@@ -21,21 +21,57 @@ npm install @hwahyeon/lisp-highlight
 
 ## Usage
 
-Example for browser-based projects:
-
 ```js
-import { highlightLisp } from './lisp-highlight.js'; // Adjust path as needed
+import { highlightLisp } from "./lisp-highlight.js"; // Adjust path as needed
 
-const code = '(define (square x) (* x x))';
+const code = "(define (square x) (* x x))";
 const html = highlightLisp(code);
-document.getElementById('output').innerHTML = html;
+document.getElementById("output").innerHTML = html;
 ```
 
-Optionally disable automatic style injection:
+## Styling Behavior
+
+By default, CSS styles are automatically injected into the document:
+
+```js
+highlightLisp(code); // Automatic styles applied
+```
+
+You can disable this and provide your own styles:
 
 ```js
 highlightLisp(code, { injectStyles: false });
 ```
+
+In that case, define CSS manually:
+
+```html
+<style>
+  .paren {
+    color: green;
+  }
+  .string {
+    color: orange;
+  }
+  .number {
+    color: purple;
+    font-weight: bold;
+  }
+  .keyword {
+    color: blue;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+</style>
+```
+
+Or use an external CSS file:
+
+```html
+<link rel="stylesheet" href="highlight.css" />
+```
+
+**Note:** This library does not insert inline styles automatically. It generates `<span>` elements with class names (`paren`, `string`, `number`, `keyword`) which you can style as needed.
 
 ## Supported Highlighting
 
@@ -43,18 +79,3 @@ highlightLisp(code, { injectStyles: false });
 - `"strings"` string highlighting
 - Numbers like `123`, `3.14` number highlighting
 - Keywords: `define`, `lambda`, `if`, `else`, `cond`, `let`, `begin`
-
-## Styling
-
-By default, basic CSS styles are injected automatically. You can override them or disable injection using:
-
-```js
-highlightLisp(code, { injectStyles: false });
-```
-
-In that case, apply your own CSS for:
-
-- `.paren`
-- `.string`
-- `.number`
-- `.keyword`
