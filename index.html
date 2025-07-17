@@ -5,62 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lisp Highlight Demo</title>
     <style>
+      :root {
+        --primary: #2294f1;
+        --primary-dark: #1874cf;
+        --bg: #121212;
+        --container-bg: #1e1e1e;
+        --text: #e0e0e0;
+        --code-bg: #2c2c2c;
+        --border: #333;
+        --radius: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: monospace;
-        background: #f0f0f0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        margin: 0;
         display: flex;
         justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        padding: 10px;
-        box-sizing: border-box;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding: 40px 20px;
       }
+
       .container {
-        background: #fff;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background: var(--container-bg);
+        padding: 30px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         width: 100%;
-        max-width: 500px;
+        max-width: 600px;
       }
+
       h2 {
-        text-align: center;
         margin-top: 0;
+        text-align: center;
+        font-size: 24px;
+        color: var(--text);
       }
+
       textarea {
         width: 100%;
-        height: 120px;
-        margin-bottom: 10px;
+        height: 140px;
         font-family: monospace;
-        padding: 10px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        padding: 12px;
+        font-size: 14px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
         resize: vertical;
+        margin-bottom: 16px;
+        background: #1a1a1a;
+        color: var(--text);
       }
+
       button {
         width: 100%;
-        padding: 10px;
-        background: #2294f1;
+        padding: 12px;
+        background: var(--primary);
         color: white;
         border: none;
-        border-radius: 4px;
-        cursor: pointer;
+        border-radius: 6px;
         font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.2s ease;
         margin-bottom: 20px;
       }
+
       button:hover {
-        background: #1874cf;
+        background: var(--primary-dark);
       }
+
       pre {
+        background: var(--code-bg);
         padding: 15px;
-        border: 1px solid #ddd;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        border-radius: 4px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-family: monospace;
+        font-size: 14px;
         overflow-x: auto;
+        color: #f8f8f2;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 14px;
+        color: #888;
+      }
+
+      .footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
@@ -77,6 +123,13 @@
       <button id="highlightBtn">Highlight Code</button>
 
       <pre id="output"></pre>
+
+      <div class="footer">
+        View on
+        <a href="https://github.com/hwahyeon/lisp-highlight" target="_blank"
+          >GitHub</a
+        >
+      </div>
     </div>
 
     <script type="module">
