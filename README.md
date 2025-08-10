@@ -13,11 +13,41 @@ A minimal, lightweight syntax highlighter for Lisp code designed for web environ
 
 ## Installation
 
-Using GitHub Packages:
+### Using npm registry
+
+```bash
+npm install lisp-highlight
+```
+
+### Using GitHub Packages
+
+To use GitHub Packages, you need an `.npmrc` file in your project root directory.
+
+1. **Location of `.npmrc`**
+
+   - Create the `.npmrc` file in your project root (where `package.json` is located).
+   - If you prefer a global configuration, you can create it in your home directory (`~/.npmrc`).
+
+2. **Example `.npmrc` content**
+
+```ini
+@hwahyeon:registry=https://npm.pkg.github.com/
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+```
+
+3. **How to generate a token**
+
+   - Go to your GitHub account settings → [Developer settings → Personal access tokens](https://github.com/settings/tokens) → **"Tokens (classic)"**
+   - The token must have at least **`read:packages`** permission.
+   - Replace `YOUR_GITHUB_TOKEN` in the `.npmrc` file with the generated token.
+
+4. **Install the package**
 
 ```bash
 npm install @hwahyeon/lisp-highlight
 ```
+
+> Note: When using GitHub Packages, add `.npmrc` to your `.gitignore` file to prevent exposing your token publicly.
 
 ## Usage
 
