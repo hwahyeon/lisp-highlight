@@ -40,6 +40,14 @@ function injectStyles() {
     .number.binary {
       color: #303F9F;
     }
+    .variable.global {
+      color: #FF9800;
+      font-style: italic;
+    }
+    .variable.constant {
+      color: #795548;
+      font-weight: bold;
+    }
   `;
   document.head.appendChild(style);
   stylesInjected = true;
@@ -68,6 +76,8 @@ export function highlightLisp(code, options = {}) {
 
   return tokens
     .map((token) => {
+      const trimmed = token.trim();
+
       if (token === "(" || token === ")")
         return `<span class="paren">${token}</span>`;
       if (/^"[^"]*"$/.test(token))
@@ -83,6 +93,11 @@ export function highlightLisp(code, options = {}) {
         return `<span class="number float">${token}</span>`;
       if (/^[+-]?\d+$/.test(token))
         return `<span class="number integer">${token}</span>`;
+
+      if (/^\*\w[\w-]*\*$/.test(trimmed))
+        return `<span class="variable global">${token}</span>`;
+      if (/^\+\w[\w-]*\+$/.test(trimmed))
+        return `<span class="variable constant">${token}</span>`;
 
       if (/^"[^"]*"$/.test(token))
         return `<span class="string">${token}</span>`;
