@@ -128,12 +128,6 @@ export function highlightLisp(code, options = {}) {
         return `<span class="special">${token}</span>`;
       }
 
-      if (/^"[^"]*"$/.test(token))
-        return `<span class="string">${token}</span>`;
-      if (/^\d+(\.\d+)?$/.test(token))
-        return `<span class="number">${token}</span>`;
-      if (/^(define|lambda|if|else|cond|let|begin)$/.test(token))
-        return `<span class="keyword">${token}</span>`;
       return token;
     })
     .join("");
