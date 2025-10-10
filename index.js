@@ -56,6 +56,10 @@ function injectStyles() {
       font-weight: bold;
       font-style: italic;
     }
+    .function {
+      color: #009688;
+      font-weight: bold;
+    }
   `;
   document.head.appendChild(style);
   stylesInjected = true;
@@ -86,6 +90,12 @@ export function highlightLisp(code, options = {}) {
     'let', 'let*', 'lambda', 'defun', 'defparameter', 'defvar', 'setq', 'setf',
     'quote', 'function', 'progn', 'if', 'cond', 'loop', 'block', 'return-from',
     'go', 'catch', 'throw', 'unwind-protect', 'tagbody', 'eval-when'
+  ]);
+
+  const knownFunctions = new Set([
+    'mapcar', 'format', 'find', 'find-if', 'reduce', 'remove', 'append',
+    'concatenate', 'list', 'length', 'member', 'assoc', 'apply', 'funcall',
+    'cons', 'car', 'cdr', 'nth', 'nthcdr', 'every', 'some', 'equal',
   ]);
 
   return tokens
@@ -126,6 +136,10 @@ export function highlightLisp(code, options = {}) {
 
       if (specialForms.has(trimmed)) {
         return `<span class="special">${token}</span>`;
+      }
+
+      if (knownFunctions.has(trimmed)) {
+        return `<span class="function">${token}</span>`;
       }
 
       return token;
