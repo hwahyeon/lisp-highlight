@@ -23,7 +23,6 @@ function injectStyles() {
     .keyword {
       color: #2196F3;
       font-weight: bold;
-      text-decoration: underline;
     }
     .number.integer {
       color: #9C27B0;
@@ -46,6 +45,10 @@ function injectStyles() {
     }
     .variable.constant {
       color: #795548;
+      font-weight: bold;
+    }
+    .keyword.known {
+      color: #FF9800;
       font-weight: bold;
     }
   `;
@@ -77,6 +80,10 @@ export function highlightLisp(code, options = {}) {
   return tokens
     .map((token) => {
       const trimmed = token.trim();
+      const knownKeywords = new Set([
+        ':test', ':key', ':start', ':end', ':name', ':direction', ':initial-element',
+        ':initial-contents', ':element-type', ':allow-other-keys', ':external', ':internal'
+      ]);
 
       if (token === "(" || token === ")")
         return `<span class="paren">${token}</span>`;
@@ -98,6 +105,13 @@ export function highlightLisp(code, options = {}) {
         return `<span class="variable global">${token}</span>`;
       if (/^\+\w[\w-]*\+$/.test(trimmed))
         return `<span class="variable constant">${token}</span>`;
+
+      if (/^:\w[\w-]*$/.test(token)) {
+        if (knownKeywords.has(token)) {
+          return `<span class="keyword known">${token}</span>`;
+        }
+        return `<span class="keyword">${token}</span>`;
+      }
 
       if (/^"[^"]*"$/.test(token))
         return `<span class="string">${token}</span>`;
