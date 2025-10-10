@@ -86,6 +86,13 @@ export function highlightLisp(code, options = {}) {
 
   if (!tokens) return "";
 
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
   const specialForms = new Set([
     'let', 'let*', 'lambda', 'defun', 'defparameter', 'defvar', 'setq', 'setf',
     'quote', 'function', 'progn', 'if', 'cond', 'loop', 'block', 'return-from',
@@ -101,48 +108,50 @@ export function highlightLisp(code, options = {}) {
   return tokens
     .map((token) => {
       const trimmed = token.trim();
+      const escaped = escapeHtml(token);
+      
       const knownKeywords = new Set([
         ':test', ':key', ':start', ':end', ':name', ':direction', ':initial-element',
         ':initial-contents', ':element-type', ':allow-other-keys', ':external', ':internal'
       ]);
 
       if (token === "(" || token === ")")
-        return `<span class="paren">${token}</span>`;
+        return `<span class="paren">${escaped}</span>`;
       if (/^"[^"]*"$/.test(token))
-        return `<span class="string">${token}</span>`;
+        return `<span class="string">${escaped}</span>`;
 
-      if (/^#b[01]+$/i.test(token))
-        return `<span class="number binary">${token}</span>`;
-      if (/^#x[\da-f]+$/i.test(token))
-        return `<span class="number hex">${token}</span>`;
-      if (/^[+-]?\d+\/\d+$/.test(token))
-        return `<span class="number ratio">${token}</span>`;
-      if (/^[+-]?(\d*\.\d+|\d+\.\d*)$/.test(token))
-        return `<span class="number float">${token}</span>`;
-      if (/^[+-]?\d+$/.test(token))
-        return `<span class="number integer">${token}</span>`;
+      if (/^#b[01]+$/i.test(trimmed))
+        return `<span class="number binary">${escaped}</span>`;
+      if (/^#x[\da-f]+$/i.test(trimmed))
+        return `<span class="number hex">${escaped}</span>`;
+      if (/^[+-]?\d+\/\d+$/.test(trimmed))
+        return `<span class="number ratio">${escaped}</span>`;
+      if (/^[+-]?(\d*\.\d+|\d+\.\d*)$/.test(trimmed))
+        return `<span class="number float">${escaped}</span>`;
+      if (/^[+-]?\d+$/.test(trimmed))
+        return `<span class="number integer">${escaped}</span>`;
 
       if (/^\*\w[\w-]*\*$/.test(trimmed))
-        return `<span class="variable global">${token}</span>`;
+        return `<span class="variable global">${escaped}</span>`;
       if (/^\+\w[\w-]*\+$/.test(trimmed))
-        return `<span class="variable constant">${token}</span>`;
+        return `<span class="variable constant">${escaped}</span>`;
 
-      if (/^:\w[\w-]*$/.test(token)) {
-        if (knownKeywords.has(token)) {
-          return `<span class="keyword known">${token}</span>`;
+      if (/^:\w[\w-]*$/.test(trimmed)) {
+        if (knownKeywords.has(trimmed)) {
+          return `<span class="keyword known">${escaped}</span>`;
         }
-        return `<span class="keyword">${token}</span>`;
+        return `<span class="keyword">${escaped}</span>`;
       }
 
       if (specialForms.has(trimmed)) {
-        return `<span class="special">${token}</span>`;
+        return `<span class="special">${escaped}</span>`;
       }
 
       if (knownFunctions.has(trimmed)) {
-        return `<span class="function">${token}</span>`;
+        return `<span class="function">${escaped}</span>`;
       }
 
-      return token;
+      return escaped;
     })
     .join("");
 }
