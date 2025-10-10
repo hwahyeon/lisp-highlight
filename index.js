@@ -5,9 +5,9 @@ let stylesInjected = false;
  * Does nothing in non-browser environments.
  */
 function injectStyles() {
-  if (stylesInjected || typeof document === 'undefined') return;
+  if (stylesInjected || typeof document === "undefined") return;
 
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.textContent = `
     .paren {
       color: #4CAF50;
@@ -24,6 +24,21 @@ function injectStyles() {
       color: #2196F3;
       font-weight: bold;
       text-decoration: underline;
+    }
+    .number.integer {
+      color: #9C27B0;
+    }
+    .number.float {
+      color: #7B1FA2;
+    }
+    .number.ratio {
+      color: #00897B;
+    }
+    .number.hex {
+      color: #512DA8;
+    }
+    .number.binary {
+      color: #303F9F;
     }
   `;
   document.head.appendChild(style);
@@ -43,17 +58,39 @@ export function highlightLisp(code, options = {}) {
 
   if (shouldInject) injectStyles();
 
-  if (typeof code !== 'string') return '';
+  if (typeof code !== "string") return "";
 
-  const tokens = code.match(/"[^"]*"|\b\d+(\.\d+)?\b|\b(define|lambda|if|else|cond|let|begin)\b|[\(\)]|\s+|[^\s()"]+/g);
+  const tokens = code.match(
+    /"[^"]*"|[+-]?\d+\/\d+|[+-]?(\d*\.\d+|\d+\.\d*)|\b(define|lambda|if|else|cond|let|begin)\b|[()]|\s+|[^\s()"]+/g
+  );
 
-  if (!tokens) return '';
+  if (!tokens) return "";
 
-  return tokens.map(token => {
-    if (token === '(' || token === ')') return `<span class="paren">${token}</span>`;
-    if (/^"[^"]*"$/.test(token)) return `<span class="string">${token}</span>`;
-    if (/^\d+(\.\d+)?$/.test(token)) return `<span class="number">${token}</span>`;
-    if (/^(define|lambda|if|else|cond|let|begin)$/.test(token)) return `<span class="keyword">${token}</span>`;
-    return token;
-  }).join('');
+  return tokens
+    .map((token) => {
+      if (token === "(" || token === ")")
+        return `<span class="paren">${token}</span>`;
+      if (/^"[^"]*"$/.test(token))
+        return `<span class="string">${token}</span>`;
+
+      if (/^#b[01]+$/i.test(token))
+        return `<span class="number binary">${token}</span>`;
+      if (/^#x[\da-f]+$/i.test(token))
+        return `<span class="number hex">${token}</span>`;
+      if (/^[+-]?\d+\/\d+$/.test(token))
+        return `<span class="number ratio">${token}</span>`;
+      if (/^[+-]?(\d*\.\d+|\d+\.\d*)$/.test(token))
+        return `<span class="number float">${token}</span>`;
+      if (/^[+-]?\d+$/.test(token))
+        return `<span class="number integer">${token}</span>`;
+
+      if (/^"[^"]*"$/.test(token))
+        return `<span class="string">${token}</span>`;
+      if (/^\d+(\.\d+)?$/.test(token))
+        return `<span class="number">${token}</span>`;
+      if (/^(define|lambda|if|else|cond|let|begin)$/.test(token))
+        return `<span class="keyword">${token}</span>`;
+      return token;
+    })
+    .join("");
 }
