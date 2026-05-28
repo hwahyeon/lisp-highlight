@@ -9,6 +9,10 @@ export function injectStyles() {
 
   const style = document.createElement("style");
   style.textContent = `
+    .comment {
+      color: #6A9955;
+      font-style: italic;
+    }
     .paren {
       color: #4CAF50;
       font-weight: bold;

@@ -24,7 +24,7 @@ export function highlightLisp(code, options = {}) {
   if (typeof code !== "string") return "";
 
   const tokens = code.match(
-    /"(?:[^"\\]|\\.)*"|[+-]?\d+\/\d+|[+-]?(\d*\.\d+|\d+\.\d*)|\b(define|lambda|if|else|cond|let|begin)\b|[()]|\s+|[^\s()"]+/g
+    /#\|[\s\S]*?\|#|;[^\n]*|"(?:[^"\\]|\\.)*"|[+-]?\d+\/\d+|[+-]?(\d*\.\d+|\d+\.\d*)|\b(define|lambda|if|else|cond|let|begin)\b|[()]|\s+|[^\s()"]+/g
   );
 
   if (!tokens) return "";
@@ -51,9 +51,12 @@ export function highlightLisp(code, options = {}) {
       const trimmed = token.trim();
       const escaped = escapeHtml(token);
 
+      if (/^;/.test(token) || /^#\|/.test(token))
+        return `<span class="comment">${escaped}</span>`;
+
       if (token === "(" || token === ")")
         return `<span class="paren">${escaped}</span>`;
-      if (/^"[^"]*"$/.test(token))
+      if (/^"(?:[^"\\]|\\.)*"$/.test(token))
         return `<span class="string">${escaped}</span>`;
 
       if (/^#b[01]+$/i.test(trimmed))
