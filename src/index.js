@@ -29,8 +29,8 @@ export function highlightLisp(code, options = {}) {
   }
 
   const specialForms = new Set([
-    'let', 'let*', 'lambda', 'defun', 'defparameter', 'defvar', 'setq', 'setf',
-    'quote', 'function', 'progn', 'if', 'cond', 'loop', 'block', 'return-from',
+    'define', 'let', 'let*', 'lambda', 'defun', 'defparameter', 'defvar', 'setq', 'setf',
+    'quote', 'function', 'progn', 'if', 'else', 'cond', 'begin', 'loop', 'block', 'return-from',
     'go', 'catch', 'throw', 'unwind-protect', 'tagbody', 'eval-when'
   ]);
 
