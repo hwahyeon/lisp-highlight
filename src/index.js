@@ -50,7 +50,7 @@ export function highlightLisp(code, options = {}) {
     // arithmetic
     'max', 'min', 'abs', 'mod', 'rem', 'expt', 'sqrt', 'floor', 'ceiling',
     'truncate', 'round', 'gcd', 'lcm', 'numerator', 'denominator',
-    'oddp', 'evenp', 'zerop', 'plusp', 'minusp', 'numberp',
+    'oddp', 'evenp', 'zerop', 'plusp', 'minusp',
     // comparison
     'equal', 'eql', 'eq', 'equalp',
     // string
