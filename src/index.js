@@ -37,9 +37,40 @@ export function highlightLisp(code, options = {}) {
   ]);
 
   const knownFunctions = new Set([
-    'mapcar', 'format', 'find', 'find-if', 'reduce', 'remove', 'append',
-    'concatenate', 'list', 'length', 'member', 'assoc', 'apply', 'funcall',
-    'cons', 'car', 'cdr', 'nth', 'nthcdr', 'every', 'some', 'equal',
+    // list operations
+    'cons', 'car', 'cdr', 'cadr', 'caddr', 'caar', 'cddr', 'list', 'list*',
+    'append', 'reverse', 'length', 'nth', 'nthcdr', 'last', 'butlast',
+    'member', 'assoc', 'assq', 'remove', 'remove-if', 'remove-if-not',
+    'find', 'find-if', 'position', 'count', 'sort', 'stable-sort',
+    'mapcar', 'mapcan', 'mapc', 'mapl', 'maplist',
+    'every', 'some', 'notany', 'notevery', 'reduce',
+    // sequence / vector
+    'concatenate', 'subseq', 'coerce', 'make-list', 'make-array', 'vector',
+    'aref', 'svref', 'fill', 'copy-seq',
+    // arithmetic
+    'max', 'min', 'abs', 'mod', 'rem', 'expt', 'sqrt', 'floor', 'ceiling',
+    'truncate', 'round', 'gcd', 'lcm', 'numerator', 'denominator',
+    'oddp', 'evenp', 'zerop', 'plusp', 'minusp', 'numberp',
+    // comparison
+    'equal', 'eql', 'eq', 'equalp',
+    // string
+    'string', 'string=', 'string<', 'string>', 'string-upcase', 'string-downcase',
+    'string-length', 'substring', 'string-append', 'number->string', 'string->number',
+    'string-contains', 'format',
+    // symbol
+    'symbol-name', 'symbol-value', 'intern', 'gensym', 'make-symbol',
+    // I/O
+    'print', 'princ', 'prin1', 'write', 'read', 'read-line', 'read-char',
+    'write-char', 'terpri', 'fresh-line', 'open', 'close', 'load',
+    // function
+    'apply', 'funcall', 'values', 'multiple-value-bind', 'identity',
+    // type / predicate
+    'null', 'atom', 'listp', 'consp', 'symbolp', 'stringp', 'numberp',
+    'integerp', 'floatp', 'functionp', 'arrayp', 'vectorp', 'characterp',
+    // hash table
+    'make-hash-table', 'gethash', 'remhash', 'clrhash', 'maphash',
+    // error
+    'error', 'warn', 'signal', 'assert',
   ]);
 
   const knownKeywords = new Set([
