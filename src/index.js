@@ -73,7 +73,7 @@ export function highlightLisp(code, options = {}) {
   if (typeof code !== "string") return "";
 
   const tokens = code.match(
-    /#\|[\s\S]*?\|#|;[^\n]*|"(?:[^"\\]|\\.)*"|#'|#\\[^\s()]+|,@|[',`]|[+-]?\d+\/\d+|[+-]?(\d*\.\d+|\d+\.\d*)|[()]|\s+|[^\s()"]+/g
+    /#\|[\s\S]*?\|#|;[^\n]*|"(?:[^"\\]|\\.)*"|#'|#\\[^\s()]+|,@|[',`]|[+-]?\d+\/\d+|[+-]?(?:\d*\.\d+|\d+\.\d*)|[()]|\s+|[^\s()"]+/g
   );
 
   if (!tokens) return "";
@@ -97,7 +97,7 @@ export function highlightLisp(code, options = {}) {
         return `<span class="number hex">${escaped}</span>`;
       if (/^[+-]?\d+\/\d+$/.test(trimmed))
         return `<span class="number ratio">${escaped}</span>`;
-      if (/^[+-]?(\d*\.\d+|\d+\.\d*)$/.test(trimmed))
+      if (/^[+-]?(?:\d*\.\d+|\d+\.\d*)$/.test(trimmed))
         return `<span class="number float">${escaped}</span>`;
       if (/^[+-]?\d+$/.test(trimmed))
         return `<span class="number integer">${escaped}</span>`;
