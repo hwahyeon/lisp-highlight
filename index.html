@@ -115,12 +115,37 @@
       <h2>Lisp Highlight Demo</h2>
 
       <textarea id="input" placeholder="Type your Lisp code here...">
-(define (factorial n)
-  (if (<= n 1)
-      1
-      (* n (factorial (- n 1)))))</textarea>
+;; Shape Calculator
+;; A demo showcasing lisp-highlight features
 
-      <button id="highlightBtn">Highlight Code</button>
+(defconstant +pi+ 3.14159)
+(defparameter *shapes* '(circle rectangle triangle))
+
+;; Area calculations
+(defun circle-area (r)
+  (* +pi+ r r))
+
+(defun rectangle-area (w h)
+  (* w h))
+
+(defun describe-shape (shape)
+  (cond ((eq shape 'circle)    "A round shape")
+        ((eq shape 'rectangle) "A flat shape")
+        (t                     "Unknown shape")))
+
+;; Compute areas for a list of radii (including a ratio)
+(let ((radii '(1 2 3 1/2)))
+  (mapcar #'circle-area radii))
+
+;; Hex color code and binary flag
+(defvar *color*  #xFF5733)
+(defvar *active* #b1)
+
+;; Character and nil defaults
+(defvar *separator* #\newline)
+(defvar *result*    nil)</textarea>
+
+      <button id="highlightBtn">▶ Run Highlight</button>
 
       <pre id="output"></pre>
 
@@ -133,7 +158,7 @@
     </div>
 
     <script type="module">
-      import { highlightLisp } from "./index.js";
+      import { highlightLisp } from "https://unpkg.com/lisp-highlight@1.1.0/src/index.js";
 
       const input = document.getElementById("input");
       const output = document.getElementById("output");
