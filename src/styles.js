@@ -72,6 +72,10 @@ export function injectStyles() {
       color: #E65100;
       font-weight: bold;
     }
+    .quote {
+      color: #AB47BC;
+      font-weight: bold;
+    }
   `;
   document.head.appendChild(style);
   stylesInjected = true;
