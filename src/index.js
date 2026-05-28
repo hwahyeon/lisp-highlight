@@ -30,9 +30,10 @@ export function highlightLisp(code, options = {}) {
   if (!tokens) return "";
 
   const specialForms = new Set([
-    'define', 'let', 'let*', 'lambda', 'defun', 'defparameter', 'defvar', 'setq', 'setf',
-    'quote', 'function', 'progn', 'if', 'else', 'cond', 'begin', 'loop', 'block', 'return-from',
-    'go', 'catch', 'throw', 'unwind-protect', 'tagbody', 'eval-when'
+    'define', 'let', 'let*', 'lambda', 'defun', 'defmacro', 'defparameter', 'defvar', 'defconstant',
+    'setq', 'setf', 'quote', 'function', 'progn', 'if', 'else', 'when', 'unless',
+    'cond', 'case', 'begin', 'and', 'or', 'not', 'loop', 'do', 'dolist', 'dotimes',
+    'block', 'return', 'return-from', 'go', 'catch', 'throw', 'unwind-protect', 'tagbody', 'eval-when'
   ]);
 
   const knownFunctions = new Set([
