@@ -1,7 +1,10 @@
 {
   "name": "@hwahyeon/lisp-highlight",
-  "version": "1.0.2",
-  "main": "index.js",
+  "version": "1.1.0",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
   "description": "Lightweight syntax highlighter for Lisp code in web applications",
   "keywords": [
     "lisp",
