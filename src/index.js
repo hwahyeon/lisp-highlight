@@ -16,7 +16,7 @@ export function highlightLisp(code, options = {}) {
   if (typeof code !== "string") return "";
 
   const tokens = code.match(
-    /"[^"]*"|[+-]?\d+\/\d+|[+-]?(\d*\.\d+|\d+\.\d*)|\b(define|lambda|if|else|cond|let|begin)\b|[()]|\s+|[^\s()"]+/g
+    /"(?:[^"\\]|\\.)*"|[+-]?\d+\/\d+|[+-]?(\d*\.\d+|\d+\.\d*)|\b(define|lambda|if|else|cond|let|begin)\b|[()]|\s+|[^\s()"]+/g
   );
 
   if (!tokens) return "";
@@ -25,7 +25,8 @@ export function highlightLisp(code, options = {}) {
     return str
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
   const specialForms = new Set([
