@@ -33,7 +33,7 @@ export function highlightLisp(code, options = {}) {
     'define', 'let', 'let*', 'lambda', 'defun', 'defmacro', 'defparameter', 'defvar', 'defconstant',
     'setq', 'setf', 'quote', 'function', 'progn', 'if', 'else', 'when', 'unless',
     'cond', 'case', 'begin', 'and', 'or', 'loop', 'do', 'dolist', 'dotimes',
-    'block', 'return', 'return-from', 'go', 'catch', 'throw', 'unwind-protect', 'tagbody', 'eval-when'
+    'multiple-value-bind', 'block', 'return', 'return-from', 'go', 'catch', 'throw', 'unwind-protect', 'tagbody', 'eval-when'
   ]);
 
   const knownFunctions = new Set([
@@ -63,7 +63,7 @@ export function highlightLisp(code, options = {}) {
     'print', 'princ', 'prin1', 'write', 'read', 'read-line', 'read-char',
     'write-char', 'terpri', 'fresh-line', 'open', 'close', 'load',
     // function
-    'apply', 'funcall', 'values', 'multiple-value-bind', 'identity',
+    'apply', 'funcall', 'values', 'identity',
     // type / predicate
     'not', 'null', 'atom', 'listp', 'consp', 'symbolp', 'stringp', 'numberp',
     'integerp', 'floatp', 'functionp', 'arrayp', 'vectorp', 'characterp',
