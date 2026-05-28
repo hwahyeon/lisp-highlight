@@ -73,7 +73,7 @@ export function highlightLisp(code, options = {}) {
   if (typeof code !== "string") return "";
 
   const tokens = code.match(
-    /#\|[\s\S]*?\|#|;[^\n]*|"(?:[^"\\]|\\.)*"|#'|#\\[^\s()]+|,@|[',`]|[+-]?\d+\/\d+|[+-]?(\d*\.\d+|\d+\.\d*)|\b(define|lambda|if|else|cond|let|begin)\b|[()]|\s+|[^\s()"]+/g
+    /#\|[\s\S]*?\|#|;[^\n]*|"(?:[^"\\]|\\.)*"|#'|#\\[^\s()]+|,@|[',`]|[+-]?\d+\/\d+|[+-]?(\d*\.\d+|\d+\.\d*)|[()]|\s+|[^\s()"]+/g
   );
 
   if (!tokens) return "";
