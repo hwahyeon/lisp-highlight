@@ -64,6 +64,10 @@ export function injectStyles() {
       color: #009688;
       font-weight: bold;
     }
+    .literal {
+      color: #F44336;
+      font-weight: bold;
+    }
   `;
   document.head.appendChild(style);
   stylesInjected = true;

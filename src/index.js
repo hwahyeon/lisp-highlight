@@ -82,6 +82,9 @@ export function highlightLisp(code, options = {}) {
         return `<span class="keyword">${escaped}</span>`;
       }
 
+      if (trimmed === 't' || trimmed === 'nil' || trimmed === '#t' || trimmed === '#f')
+        return `<span class="literal">${escaped}</span>`;
+
       if (specialForms.has(trimmed)) {
         return `<span class="special">${escaped}</span>`;
       }
