@@ -6,7 +6,8 @@ A minimal, lightweight syntax highlighter for Lisp code designed for web environ
 
 ## Features
 
-- Highlights parentheses, keywords, strings, and numbers
+- Highlights parentheses, special forms, built-in functions, strings, numbers, and comments
+- Supports Common Lisp and Scheme syntax (character literals, booleans, quote shorthands, keywords)
 - Lightweight and dependency-free
 - Suitable for browser environments (ES Module)
 - Optional automatic CSS injection
@@ -19,35 +20,6 @@ A minimal, lightweight syntax highlighter for Lisp code designed for web environ
 npm install lisp-highlight
 ```
 
-### Using GitHub Packages
-
-To use GitHub Packages, you need an `.npmrc` file in your project root directory.
-
-1. **Location of `.npmrc`**
-
-   - Create the `.npmrc` file in your project root (where `package.json` is located).
-   - If you prefer a global configuration, you can create it in your home directory (`~/.npmrc`).
-
-2. **Example `.npmrc` content**
-
-```ini
-@hwahyeon:registry=https://npm.pkg.github.com/
-//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
-```
-
-3. **How to generate a token**
-
-   - Go to your GitHub account settings → [Developer settings → Personal access tokens](https://github.com/settings/tokens) → **"Tokens (classic)"**
-   - The token must have at least **`read:packages`** permission.
-   - Replace `YOUR_GITHUB_TOKEN` in the `.npmrc` file with the generated token.
-
-4. **Install the package**
-
-```bash
-npm install @hwahyeon/lisp-highlight
-```
-
-> Note: When using GitHub Packages, add `.npmrc` to your `.gitignore` file to prevent exposing your token publicly.
 
 ## Usage
 
@@ -77,21 +49,18 @@ In that case, define CSS manually:
 
 ```html
 <style>
-  .paren {
-    color: green;
-  }
-  .string {
-    color: orange;
-  }
-  .number {
-    color: purple;
-    font-weight: bold;
-  }
-  .keyword {
-    color: blue;
-    font-weight: bold;
-    text-decoration: underline;
-  }
+  .comment   { color: gray; font-style: italic; }
+  .paren     { color: green; font-weight: bold; }
+  .string    { color: red; }
+  .number    { color: purple; font-weight: bold; }
+  .special   { color: blue; font-weight: bold; }
+  .function  { color: teal; font-weight: bold; }
+  .keyword   { color: royalblue; }
+  .literal   { color: crimson; font-weight: bold; }
+  .character { color: darkorange; font-weight: bold; }
+  .quote     { color: orchid; font-weight: bold; }
+  .variable.global   { color: orange; font-style: italic; }
+  .variable.constant { color: saddlebrown; font-weight: bold; }
 </style>
 ```
 
@@ -101,11 +70,24 @@ Or use an external CSS file:
 <link rel="stylesheet" href="highlight.css" />
 ```
 
-**Note:** This library does not insert inline styles automatically. It generates `<span>` elements with class names (`paren`, `string`, `number`, `keyword`) which you can style as needed.
 
 ## Supported Highlighting
 
-- `(` `)` highlighted as parentheses
-- `"strings"` string highlighting
-- Numbers like `123`, `3.14` number highlighting
-- Keywords: `define`, `lambda`, `if`, `else`, `cond`, `let`, `begin`
+| Class | Description | Example |
+|---|---|---|
+| `.comment` | Line and block comments | `; comment`, `#\| block \|#` |
+| `.paren` | Parentheses | `(`, `)` |
+| `.string` | String literals | `"hello"` |
+| `.number.integer` | Integer numbers | `42`, `-7` |
+| `.number.float` | Floating point numbers | `3.14` |
+| `.number.ratio` | Rational numbers | `1/3` |
+| `.number.hex` | Hexadecimal numbers | `#xFF` |
+| `.number.binary` | Binary numbers | `#b1010` |
+| `.special` | Special forms | `define`, `lambda`, `if`, `let`, `loop`, ... |
+| `.function` | Built-in functions | `car`, `mapcar`, `format`, ... |
+| `.keyword` | Keyword symbols | `:test`, `:key`, `:start`, ... |
+| `.literal` | Boolean and nil literals | `t`, `nil`, `#t`, `#f` |
+| `.character` | Character literals | `#\a`, `#\space`, `#\newline` |
+| `.quote` | Quote shorthands | `'`, `` ` ``, `,`, `,@`, `#'` |
+| `.variable.global` | Global variables | `*standard-output*` |
+| `.variable.constant` | Constants | `+pi+` |
