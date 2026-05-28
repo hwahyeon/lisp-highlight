@@ -8,6 +8,55 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
+const specialForms = new Set([
+  'define', 'let', 'let*', 'lambda', 'defun', 'defmacro', 'defparameter', 'defvar', 'defconstant',
+  'setq', 'setf', 'quote', 'function', 'progn', 'if', 'else', 'when', 'unless',
+  'cond', 'case', 'begin', 'and', 'or', 'loop', 'do', 'dolist', 'dotimes',
+  'multiple-value-bind', 'block', 'return', 'return-from', 'go', 'catch', 'throw', 'unwind-protect', 'tagbody', 'eval-when'
+]);
+
+const knownFunctions = new Set([
+  // list operations
+  'cons', 'car', 'cdr', 'cadr', 'caddr', 'caar', 'cddr', 'list', 'list*',
+  'append', 'reverse', 'length', 'nth', 'nthcdr', 'last', 'butlast',
+  'member', 'assoc', 'assq', 'remove', 'remove-if', 'remove-if-not',
+  'find', 'find-if', 'position', 'count', 'sort', 'stable-sort',
+  'mapcar', 'mapcan', 'mapc', 'mapl', 'maplist',
+  'every', 'some', 'notany', 'notevery', 'reduce',
+  // sequence / vector
+  'concatenate', 'subseq', 'coerce', 'make-list', 'make-array', 'vector',
+  'aref', 'svref', 'fill', 'copy-seq',
+  // arithmetic
+  'max', 'min', 'abs', 'mod', 'rem', 'expt', 'sqrt', 'floor', 'ceiling',
+  'truncate', 'round', 'gcd', 'lcm', 'numerator', 'denominator',
+  'oddp', 'evenp', 'zerop', 'plusp', 'minusp',
+  // comparison
+  'equal', 'eql', 'eq', 'equalp',
+  // string
+  'string', 'string=', 'string<', 'string>', 'string-upcase', 'string-downcase',
+  'string-length', 'substring', 'string-append', 'number->string', 'string->number',
+  'string-contains', 'format',
+  // symbol
+  'symbol-name', 'symbol-value', 'intern', 'gensym', 'make-symbol',
+  // I/O
+  'print', 'princ', 'prin1', 'write', 'read', 'read-line', 'read-char',
+  'write-char', 'terpri', 'fresh-line', 'open', 'close', 'load',
+  // function
+  'apply', 'funcall', 'values', 'identity',
+  // type / predicate
+  'not', 'null', 'atom', 'listp', 'consp', 'symbolp', 'stringp', 'numberp',
+  'integerp', 'floatp', 'functionp', 'arrayp', 'vectorp', 'characterp',
+  // hash table
+  'make-hash-table', 'gethash', 'remhash', 'clrhash', 'maphash',
+  // error
+  'error', 'warn', 'signal', 'assert',
+]);
+
+const knownKeywords = new Set([
+  ':test', ':key', ':start', ':end', ':name', ':direction', ':initial-element',
+  ':initial-contents', ':element-type', ':allow-other-keys', ':external', ':internal'
+]);
+
 /**
  * Highlights Lisp code by adding HTML span tags for syntax elements.
  *
@@ -28,55 +77,6 @@ export function highlightLisp(code, options = {}) {
   );
 
   if (!tokens) return "";
-
-  const specialForms = new Set([
-    'define', 'let', 'let*', 'lambda', 'defun', 'defmacro', 'defparameter', 'defvar', 'defconstant',
-    'setq', 'setf', 'quote', 'function', 'progn', 'if', 'else', 'when', 'unless',
-    'cond', 'case', 'begin', 'and', 'or', 'loop', 'do', 'dolist', 'dotimes',
-    'multiple-value-bind', 'block', 'return', 'return-from', 'go', 'catch', 'throw', 'unwind-protect', 'tagbody', 'eval-when'
-  ]);
-
-  const knownFunctions = new Set([
-    // list operations
-    'cons', 'car', 'cdr', 'cadr', 'caddr', 'caar', 'cddr', 'list', 'list*',
-    'append', 'reverse', 'length', 'nth', 'nthcdr', 'last', 'butlast',
-    'member', 'assoc', 'assq', 'remove', 'remove-if', 'remove-if-not',
-    'find', 'find-if', 'position', 'count', 'sort', 'stable-sort',
-    'mapcar', 'mapcan', 'mapc', 'mapl', 'maplist',
-    'every', 'some', 'notany', 'notevery', 'reduce',
-    // sequence / vector
-    'concatenate', 'subseq', 'coerce', 'make-list', 'make-array', 'vector',
-    'aref', 'svref', 'fill', 'copy-seq',
-    // arithmetic
-    'max', 'min', 'abs', 'mod', 'rem', 'expt', 'sqrt', 'floor', 'ceiling',
-    'truncate', 'round', 'gcd', 'lcm', 'numerator', 'denominator',
-    'oddp', 'evenp', 'zerop', 'plusp', 'minusp',
-    // comparison
-    'equal', 'eql', 'eq', 'equalp',
-    // string
-    'string', 'string=', 'string<', 'string>', 'string-upcase', 'string-downcase',
-    'string-length', 'substring', 'string-append', 'number->string', 'string->number',
-    'string-contains', 'format',
-    // symbol
-    'symbol-name', 'symbol-value', 'intern', 'gensym', 'make-symbol',
-    // I/O
-    'print', 'princ', 'prin1', 'write', 'read', 'read-line', 'read-char',
-    'write-char', 'terpri', 'fresh-line', 'open', 'close', 'load',
-    // function
-    'apply', 'funcall', 'values', 'identity',
-    // type / predicate
-    'not', 'null', 'atom', 'listp', 'consp', 'symbolp', 'stringp', 'numberp',
-    'integerp', 'floatp', 'functionp', 'arrayp', 'vectorp', 'characterp',
-    // hash table
-    'make-hash-table', 'gethash', 'remhash', 'clrhash', 'maphash',
-    // error
-    'error', 'warn', 'signal', 'assert',
-  ]);
-
-  const knownKeywords = new Set([
-    ':test', ':key', ':start', ':end', ':name', ':direction', ':initial-element',
-    ':initial-contents', ':element-type', ':allow-other-keys', ':external', ':internal'
-  ]);
 
   return tokens
     .map((token) => {
