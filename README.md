@@ -14,12 +14,9 @@ A minimal, lightweight syntax highlighter for Lisp code designed for web environ
 
 ## Installation
 
-### Using npm registry
-
 ```bash
 npm install lisp-highlight
 ```
-
 
 ## Usage
 
@@ -85,7 +82,8 @@ Or use an external CSS file:
 | `.number.binary` | Binary numbers | `#b1010` |
 | `.special` | Special forms | `define`, `lambda`, `if`, `let`, `loop`, ... |
 | `.function` | Built-in functions | `car`, `mapcar`, `format`, ... |
-| `.keyword` | Keyword symbols | `:test`, `:key`, `:start`, ... |
+| `.keyword` | Keyword symbols | `:direction`, `:element-type`, ... |
+| `.keyword.known` | Well-known keyword arguments | `:test`, `:key`, `:start`, `:end`, ... |
 | `.literal` | Boolean and nil literals | `t`, `nil`, `#t`, `#f` |
 | `.character` | Character literals | `#\a`, `#\space`, `#\newline` |
 | `.quote` | Quote shorthands | `'`, `` ` ``, `,`, `,@`, `#'` |
