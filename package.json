@@ -2,6 +2,9 @@
   "name": "lisp-highlight",
   "version": "1.1.0",
   "main": "src/index.js",
+  "files": [
+    "src"
+  ],
   "exports": {
     ".": "./src/index.js"
   },
