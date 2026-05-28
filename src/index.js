@@ -32,7 +32,7 @@ export function highlightLisp(code, options = {}) {
   const specialForms = new Set([
     'define', 'let', 'let*', 'lambda', 'defun', 'defmacro', 'defparameter', 'defvar', 'defconstant',
     'setq', 'setf', 'quote', 'function', 'progn', 'if', 'else', 'when', 'unless',
-    'cond', 'case', 'begin', 'and', 'or', 'not', 'loop', 'do', 'dolist', 'dotimes',
+    'cond', 'case', 'begin', 'and', 'or', 'loop', 'do', 'dolist', 'dotimes',
     'block', 'return', 'return-from', 'go', 'catch', 'throw', 'unwind-protect', 'tagbody', 'eval-when'
   ]);
 
@@ -65,7 +65,7 @@ export function highlightLisp(code, options = {}) {
     // function
     'apply', 'funcall', 'values', 'multiple-value-bind', 'identity',
     // type / predicate
-    'null', 'atom', 'listp', 'consp', 'symbolp', 'stringp', 'numberp',
+    'not', 'null', 'atom', 'listp', 'consp', 'symbolp', 'stringp', 'numberp',
     'integerp', 'floatp', 'functionp', 'arrayp', 'vectorp', 'characterp',
     // hash table
     'make-hash-table', 'gethash', 'remhash', 'clrhash', 'maphash',
