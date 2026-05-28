@@ -1,5 +1,13 @@
 import { injectStyles } from "./styles.js";
 
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 /**
  * Highlights Lisp code by adding HTML span tags for syntax elements.
  *
@@ -20,14 +28,6 @@ export function highlightLisp(code, options = {}) {
   );
 
   if (!tokens) return "";
-
-  function escapeHtml(str) {
-    return str
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
 
   const specialForms = new Set([
     'define', 'let', 'let*', 'lambda', 'defun', 'defparameter', 'defvar', 'setq', 'setf',
