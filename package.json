@@ -1,5 +1,5 @@
 {
-  "name": "@hwahyeon/lisp-highlight",
+  "name": "lisp-highlight",
   "version": "1.1.0",
   "main": "src/index.js",
   "exports": {
@@ -22,7 +22,8 @@
     "type": "git",
     "url": "git+https://github.com/hwahyeon/lisp-highlight.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  }
+  "bugs": {
+    "url": "https://github.com/hwahyeon/lisp-highlight/issues"
+  },
+  "homepage": "https://hwahyeon.github.io/lisp-highlight/"
 }
