@@ -52,7 +52,7 @@ export function injectStyles() {
       font-weight: bold;
     }
     .keyword.known {
-      color: #FF9800;
+      color: #00BCD4;
       font-weight: bold;
     }
     .special {
