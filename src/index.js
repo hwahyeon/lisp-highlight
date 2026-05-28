@@ -41,15 +41,15 @@ export function highlightLisp(code, options = {}) {
     'cons', 'car', 'cdr', 'nth', 'nthcdr', 'every', 'some', 'equal',
   ]);
 
+  const knownKeywords = new Set([
+    ':test', ':key', ':start', ':end', ':name', ':direction', ':initial-element',
+    ':initial-contents', ':element-type', ':allow-other-keys', ':external', ':internal'
+  ]);
+
   return tokens
     .map((token) => {
       const trimmed = token.trim();
       const escaped = escapeHtml(token);
-      
-      const knownKeywords = new Set([
-        ':test', ':key', ':start', ':end', ':name', ':direction', ':initial-element',
-        ':initial-contents', ':element-type', ':allow-other-keys', ':external', ':internal'
-      ]);
 
       if (token === "(" || token === ")")
         return `<span class="paren">${escaped}</span>`;
